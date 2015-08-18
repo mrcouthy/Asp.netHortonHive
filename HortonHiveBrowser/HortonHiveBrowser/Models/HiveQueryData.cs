@@ -8,10 +8,16 @@ using System.Web;
 
 namespace HortonHiveBrowser.Models
 {
-    public class HiveQueryData
+    public class ReportModel
+    {
+        public string ReportDate { get; set; }
+        public DataTable Report { get; set; }
+    }
+
+    public class HiveQueryDataService
     {
 
-        public DataTable GetDataFromHivet()
+        public DataTable GetDataFromHivet(string t)
         {
             DataTable dt = new DataTable("MyTable");
             dt.Columns.Add(new DataColumn("Col1", typeof(string)));
@@ -29,7 +35,7 @@ namespace HortonHiveBrowser.Models
             return dt;
         }
 
-        public DataTable GetDataFromHive()
+        public DataTable GetDataFromHive(string hiveQL)
         {
             OdbcConnection DbConnection = new OdbcConnection("DSN=horton");
             try
@@ -42,7 +48,7 @@ namespace HortonHiveBrowser.Models
                 return null;
             }
             OdbcCommand cmd = DbConnection.CreateCommand();
-            cmd.CommandText = "SELECT * FROM sample_08 LIMIT 100;";
+            cmd.CommandText = hiveQL;// "SELECT * FROM sample_08 LIMIT 100;";
             DbDataReader dr = cmd.ExecuteReader();
             var dataTable = new DataTable();
             dataTable.Load(dr);
