@@ -1,37 +1,48 @@
-﻿
-@{
+﻿@{
     ViewBag.Title = "Index";
 }
+<div class="container-fluid">
 
-@using (@Html.BeginForm("returnAPage","SampleData"))
-{
-    @Html.TextBox("HiveQL", "SELECT * FROM sample_08 LIMIT 100;", new { style = "width:950px" })
-    <input type="submit" value="Run Query" />
-}
 
-<h2>Sample Hive Data returned from following query</h2>
+    @using (@Html.BeginForm("returnAPage", "SampleData", FormMethod.Post, new { role = "form" }))
+    {<div class="row">
+        <div class="col-sm-3 col-md-6" style="background-color:lavender;">
+            @Html.TextArea("HiveQL", "SELECT * FROM sample_08 LIMIT 100;", new { style = "width:950px" })
+        </div>
+    </div>
+        <div class="row">
+            <div class="col-sm-3 col-md-6">
+                <input type="submit" value="Run Query" class="btn btn-primary" />
+            </div>
+        </div>
+
+    }
+
+    <h2>Sample Hive Data returned from following query</h2>
 <pre>
    @Model.HiveQl
 </pre>
 
-<table border="1">
-    <thead>
-        <tr>
-            @foreach (System.Data.DataColumn col in Model.dt.Columns)
-            {
-                <th>@col.Caption</th>
-            }
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (System.Data.DataRow row in Model.dt.Rows)
-        {
+    <table border="1" class="table table-striped">
+        <thead>
             <tr>
-                @foreach (var cell in row.ItemArray)
+                @foreach (System.Data.DataColumn col in Model.dt.Columns)
                 {
-                    <td>@cell.ToString()</td>
+                    <th>@col.Caption</th>
                 }
             </tr>
-        }
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+            @foreach (System.Data.DataRow row in Model.dt.Rows)
+            {
+                <tr>
+                    @foreach (var cell in row.ItemArray)
+                    {
+                        <td>@cell.ToString()</td>
+                    }
+                </tr>
+            }
+        </tbody>
+    </table>
+
+</div>
