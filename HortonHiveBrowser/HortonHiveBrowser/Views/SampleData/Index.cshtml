@@ -1,4 +1,5 @@
-﻿@{
+﻿
+@{
     ViewBag.Title = "Index";
 }
 
@@ -10,20 +11,20 @@
 
 <h2>Sample Hive Data returned from following query</h2>
 <pre>
-    SELECT * FROM sample_08 LIMIT 100;
+   @Model.HiveQl
 </pre>
 
 <table border="1">
     <thead>
         <tr>
-            @foreach (System.Data.DataColumn col in Model.Columns)
+            @foreach (System.Data.DataColumn col in Model.dt.Columns)
             {
                 <th>@col.Caption</th>
             }
         </tr>
     </thead>
     <tbody>
-        @foreach (System.Data.DataRow row in Model.Rows)
+        @foreach (System.Data.DataRow row in Model.dt.Rows)
         {
             <tr>
                 @foreach (var cell in row.ItemArray)

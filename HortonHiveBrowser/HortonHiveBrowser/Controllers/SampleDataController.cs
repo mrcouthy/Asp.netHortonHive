@@ -1,6 +1,7 @@
 ﻿using HortonHiveBrowser.Models;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Web;
 using System.Web.Helpers;
@@ -10,21 +11,27 @@ namespace HortonHiveBrowser.Controllers
 {
     public class SampleDataController : Controller
     {
-        //
-        // GET: /SampleData/
+        public class DataModel
+        {
+            public DataTable dt;
+            public String HiveQl;
+        }
 
         public ActionResult Index()
         {
-            var dt = new HiveQueryDataService().GetDataFromHivet("SELECT * FROM sample_08 LIMIT 100;");
-            return View(dt);
+            var dataModel = new DataModel { HiveQl = "SELECT * FROM sample_08 LIMIT 100;" };
+            var dt = new HiveQueryDataService().GetDataFromHivet(dataModel.HiveQl);
+            dataModel.dt = dt;
+            return View(dataModel);
         }
-      
 
         [HttpPost]
         public ActionResult returnAPage(string hiveQL)
         {
-            var dt = new HiveQueryDataService().GetDataFromHive(hiveQL);
-            return View("Index",   dt);
+            var dataModel = new DataModel { HiveQl = hiveQL };
+            var dt = new HiveQueryDataService().GetDataFromHive(dataModel.HiveQl);
+            dataModel.dt = dt;
+            return View("Index", dataModel);
         }
 
         [HttpPost]
@@ -32,15 +39,5 @@ namespace HortonHiveBrowser.Controllers
         {
             return View();
         }
-
-        //public JsonResult Test()
-        //{
-        //    var dt = new HiveQueryDataService().GetDataFromHive();
-        //    var model = new ReportModel();
-        //    model.ReportDate = "Test";
-        //    model.Report = dt;
-        //    return new Json(model, JsonRequestBehavior.AllowGet);
-        //}
-
     }
 }
