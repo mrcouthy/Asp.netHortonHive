@@ -1,14 +1,16 @@
-﻿var A = (function (a) {
+﻿var A = (function(a) {
 
     function buildHtmlTable(myList) {
         var columns = addAllColumnHeaders(myList);
 
-        for (var i = 0 ; i < myList.length ; i++) {
+        for (var i = 0; i < myList.length; i++) {
             var row$ = $('<tr/>');
-            for (var colIndex = 0 ; colIndex < columns.length ; colIndex++) {
+            for (var colIndex = 0; colIndex < columns.length; colIndex++) {
                 var cellValue = myList[i][columns[colIndex]];
 
-                if (cellValue == null) { cellValue = ""; }
+                if (cellValue == null) {
+                    cellValue = "";
+                }
 
                 row$.append($('<td/>').html(cellValue));
             }
@@ -23,7 +25,7 @@
         var columnSet = [];
         var headerTr$ = $('<tr/>');
 
-        for (var i = 0 ; i < myList.length ; i++) {
+        for (var i = 0; i < myList.length; i++) {
             var rowHash = myList[i];
             for (var key in rowHash) {
                 if ($.inArray(key, columnSet) == -1) {
@@ -39,12 +41,12 @@
 
     function getJson(url) {
         var text = $('#HiveQL').val();
-        $.getJSON(url, { hiveQL: text, time: "2pm" }, function (json) {
-            buildHtmlTable( json.dt);
+        $.getJSON(url, { hiveQL: text, time: "2pm" }, function(json) {
+            buildHtmlTable(json.dt);
             //  $('#jsonOut').text(JSON.stringify(json));
         });
     }
+
     a.getJson = getJson;
     return a;
 })(window.A || {})
-

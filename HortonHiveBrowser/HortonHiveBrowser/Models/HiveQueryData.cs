@@ -1,10 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Data;
 using System.Data.Common;
 using System.Data.Odbc;
-using System.Linq;
-using System.Web;
 
 namespace HortonHiveBrowser.Models
 {
@@ -16,13 +13,12 @@ namespace HortonHiveBrowser.Models
 
     public class HiveQueryDataService
     {
-
         public DataTable GetDataFromHivet(string t)
         {
-            DataTable dt = new DataTable("MyTable");
-            dt.Columns.Add(new DataColumn("Col1", typeof(string)));
-            dt.Columns.Add(new DataColumn("Col2", typeof(string)));
-            dt.Columns.Add(new DataColumn("Col3", typeof(string)));
+            var dt = new DataTable("MyTable");
+            dt.Columns.Add(new DataColumn("Col1", typeof (string)));
+            dt.Columns.Add(new DataColumn("Col2", typeof (string)));
+            dt.Columns.Add(new DataColumn("Col3", typeof (string)));
 
             for (int i = 0; i < 3; i++)
             {
@@ -35,24 +31,24 @@ namespace HortonHiveBrowser.Models
             return dt;
         }
 
-        public DataTable GetDataFromHive(string hiveQL)
+        public DataTable GetDataFromHive(string hiveQl)
         {
-            OdbcConnection DbConnection = new OdbcConnection("DSN=horton");
+            var dbConnection = new OdbcConnection("DSN=horton");
             try
             {
-                DbConnection.Open();
+                dbConnection.Open();
             }
             catch (OdbcException ex)
             {
                 Console.WriteLine(ex.Message);
                 return null;
             }
-            OdbcCommand cmd = DbConnection.CreateCommand();
-            cmd.CommandText = hiveQL;// "SELECT * FROM sample_08 LIMIT 100;";
+            OdbcCommand cmd = dbConnection.CreateCommand();
+            cmd.CommandText = hiveQl; // "SELECT * FROM sample_08 LIMIT 100;";
             DbDataReader dr = cmd.ExecuteReader();
             var dataTable = new DataTable();
             dataTable.Load(dr);
-            DbConnection.Close();
+            dbConnection.Close();
             return dataTable;
         }
     }

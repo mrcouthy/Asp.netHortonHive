@@ -1,14 +1,12 @@
-﻿namespace Web.Helpers
+﻿using System;
+using System.Text;
+using System.Web;
+using System.Web.Mvc;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
+
+namespace HortonHiveBrowser.Helpers
 {
-    using System;
-    using System.Diagnostics;
-    using System.Text;
-    using System.Web;
-    using System.Web.Mvc;
-
-    using Newtonsoft.Json;
-    using Newtonsoft.Json.Serialization;
-
     /// <summary>
     ///     Simple Json Result that implements the Json.NET serialiser offering more versatile serialisation
     /// </summary>
@@ -22,8 +20,8 @@
 
         public JsonNetResult(object responseBody)
         {
-            this.ResponseBody = responseBody;
-            this.Settings = new JsonSerializerSettings
+            ResponseBody = responseBody;
+            Settings = new JsonSerializerSettings
             {
                 ContractResolver = new CamelCasePropertyNamesContractResolver()
             };
@@ -77,24 +75,17 @@
             HttpResponseBase response = context.HttpContext.Response;
 
             // set content type 
-            if (!string.IsNullOrEmpty(this.ContentType))
-            {
-                response.ContentType = this.ContentType;
-            }
-            else
-            {
-                response.ContentType = "application/json";
-            }
+            response.ContentType = !string.IsNullOrEmpty(ContentType) ? ContentType : "application/json";
 
             // set content encoding 
-            if (this.ContentEncoding != null)
+            if (ContentEncoding != null)
             {
-                response.ContentEncoding = this.ContentEncoding;
+                response.ContentEncoding = ContentEncoding;
             }
 
-            if (this.ResponseBody != null)
+            if (ResponseBody != null)
             {
-                response.Write(JsonConvert.SerializeObject(this.ResponseBody, this.Formatting, this.Settings));
+                response.Write(JsonConvert.SerializeObject(ResponseBody, Formatting, Settings));
             }
         }
 

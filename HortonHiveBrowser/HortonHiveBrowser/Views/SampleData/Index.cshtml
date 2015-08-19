@@ -1,44 +1,45 @@
-﻿@{
+﻿@using System.Data
+@{
     ViewBag.Title = "Index";
 }
-<div class="container-fluid" style="background-color:lavender;">
+<div class="container-fluid" style="background-color: lavender;">
 
 
-    @using (@Html.BeginForm("returnAPage", "SampleData", FormMethod.Post, new { role = "form" }))
-    {<div class="row">
-        <div class="col-sm-3 col-md-6" style="background-color:#bee1f6;">
-            @Html.TextArea("HiveQL", "SELECT * FROM sample_08 LIMIT 100;", new { style = "width:950px;height:200px" })
+    @using (@Html.BeginForm("returnAPage", "SampleData", FormMethod.Post, new {role = "form"}))
+    {
+        <div class="row">
+            <div class="col-sm-3 col-md-6" style="background-color: #bee1f6;">
+                @Html.TextArea("HiveQL", "SELECT * FROM sample_08 LIMIT 100;", new {style = "width:950px;height:200px"})
+            </div>
         </div>
-    </div>
         <div class="row">
             <div class="col-sm-3 col-md-6">
                 <input type="submit" value="Run Query" class="btn btn-primary" />
             </div>
         </div>
-
     }
-    <button onclick="A.getJson('SampleData/returnAJson')"  class="btn btn-primary" >ok</button>
+    <button onclick=" A.getJson('SampleData/returnAJson') "  class="btn btn-primary" >ok</button>
 
     <table id="jsonOut" class="table table-striped"></table>
     <h2>Sample Hive Data returned from following query</h2>
-<pre>
+    <pre>
    @Model.HiveQl
 </pre>
 
-    <table border="1" class="table table-striped">
+    <table class="table table-striped">
         <thead>
             <tr>
-                @foreach (System.Data.DataColumn col in Model.dt.Columns)
+                @foreach (DataColumn col in Model.dt.Columns)
                 {
                     <th>@col.Caption</th>
                 }
             </tr>
         </thead>
         <tbody>
-            @foreach (System.Data.DataRow row in Model.dt.Rows)
+            @foreach (DataRow row in Model.dt.Rows)
             {
                 <tr>
-                    @foreach (var cell in row.ItemArray)
+                    @foreach (object cell in row.ItemArray)
                     {
                         <td>@cell.ToString()</td>
                     }
