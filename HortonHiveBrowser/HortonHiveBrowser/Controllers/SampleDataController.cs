@@ -1,4 +1,5 @@
 ﻿using HortonHiveBrowser.Models;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -6,6 +7,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Helpers;
 using System.Web.Mvc;
+using Web.Helpers;
 
 namespace HortonHiveBrowser.Controllers
 {
@@ -37,11 +39,14 @@ namespace HortonHiveBrowser.Controllers
         {
             public string prprty;
         }
-    
-        public ActionResult returnAJSON(string parameter,string time)
+
+        public ActionResult returnAJSON(string hiveQL)
         {
-            var sc = new SimpleClass { prprty = "Ball" };
-            return Json(sc, JsonRequestBehavior.AllowGet);
+            var dataModel = new DataModel { HiveQl = hiveQL };
+            var dt = new HiveQueryDataService().GetDataFromHive(dataModel.HiveQl);
+            dataModel.dt = dt;
+
+            return new JsonNetResult(dataModel);
         }
     }
 }
