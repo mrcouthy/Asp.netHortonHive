@@ -1,6 +1,6 @@
 ﻿var A = (function (a) {
     function getJson(url) {
-        $.getJSON(url, function (json) { $('#jsonOut').text(json['prprty']); });
+        $.getJSON(url, { parameter: "John", time: "2pm" }, function (json) { $('#jsonOut').text(json['prprty']); });
     }
     a.getJson = getJson;
     return a;

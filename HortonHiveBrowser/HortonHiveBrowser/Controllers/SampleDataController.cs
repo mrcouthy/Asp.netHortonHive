@@ -38,7 +38,7 @@ namespace HortonHiveBrowser.Controllers
             public string prprty;
         }
     
-        public ActionResult returnAJSON()
+        public ActionResult returnAJSON(string parameter,string time)
         {
             var sc = new SimpleClass { prprty = "Ball" };
             return Json(sc, JsonRequestBehavior.AllowGet);
