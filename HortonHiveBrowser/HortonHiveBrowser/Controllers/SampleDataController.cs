@@ -33,11 +33,15 @@ namespace HortonHiveBrowser.Controllers
             dataModel.dt = dt;
             return View("Index", dataModel);
         }
-
-        [HttpPost]
-        public ActionResult aa()
+        public class SimpleClass
         {
-            return View();
+            public string prprty;
+        }
+    
+        public ActionResult returnAJSON()
+        {
+            var sc = new SimpleClass { prprty = "Ball" };
+            return Json(sc, JsonRequestBehavior.AllowGet);
         }
     }
 }
