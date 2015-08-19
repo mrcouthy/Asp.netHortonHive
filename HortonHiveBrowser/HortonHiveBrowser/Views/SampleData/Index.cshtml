@@ -18,7 +18,7 @@
             </div>
         </div>
     }
-    <button onclick=" A.getJson('SampleData/returnAJson') "  class="btn btn-primary" >ok</button>
+    <button onclick=" A.getJson('SampleData/ReturnAjson') "  class="btn btn-primary" >ok</button>
 
     <table id="jsonOut" class="table table-striped"></table>
     <h2>Sample Hive Data returned from following query</h2>
@@ -29,14 +29,14 @@
     <table class="table table-striped">
         <thead>
             <tr>
-                @foreach (DataColumn col in Model.dt.Columns)
+                @foreach (DataColumn col in Model.Dt.Columns)
                 {
                     <th>@col.Caption</th>
                 }
             </tr>
         </thead>
         <tbody>
-            @foreach (DataRow row in Model.dt.Rows)
+            @foreach (DataRow row in Model.Dt.Rows)
             {
                 <tr>
                     @foreach (object cell in row.ItemArray)
