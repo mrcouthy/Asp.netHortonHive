@@ -34,19 +34,21 @@
                 }
             }
         }
-        $("#jsonOut").append(headerTr$);
+        $("#jsonOut").html(headerTr$);
 
         return columnSet;
     }
 
-    function getJson(url) {
+    function getHiveData(url) {
+        Common.pageLoading('true');
         var text = $('#HiveQL').val();
         $.getJSON(url, { hiveQL: text, time: "2pm" }, function(json) {
             buildHtmlTable(json.dt);
+            Common.pageLoading('false');
             //  $('#jsonOut').text(JSON.stringify(json));
         });
     }
 
-    a.getJson = getJson;
+    a.getHiveData = getHiveData;
     return a;
 })(window.A || {})

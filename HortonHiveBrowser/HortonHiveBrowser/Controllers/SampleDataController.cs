@@ -11,7 +11,7 @@ namespace HortonHiveBrowser.Controllers
         public ActionResult Index()
         {
             var dataModel = new DataModel {HiveQl = "SELECT * FROM sample_08 LIMIT 100;"};
-            DataTable dt = new HiveQueryDataService().GetDataFromHivet(dataModel.HiveQl);
+            var dt = new DataTable();
             dataModel.Dt = dt;
             return View(dataModel);
         }
@@ -20,7 +20,7 @@ namespace HortonHiveBrowser.Controllers
         public ActionResult ReturnAPage(string hiveQl)
         {
             var dataModel = new DataModel {HiveQl = hiveQl};
-            DataTable dt = new HiveQueryDataService().GetDataFromHive(dataModel.HiveQl);
+            DataTable dt = new HiveQueryDataService().GetDataFromHivet(dataModel.HiveQl);
             dataModel.Dt = dt;
             return View("Index", dataModel);
         }
@@ -28,7 +28,7 @@ namespace HortonHiveBrowser.Controllers
         public ActionResult ReturnAjson(string hiveQl)
         {
             var dataModel = new DataModel {HiveQl = hiveQl};
-            DataTable dt = new HiveQueryDataService().GetDataFromHive(dataModel.HiveQl);
+            DataTable dt = new HiveQueryDataService().GetDataFromHivet(dataModel.HiveQl);
             dataModel.Dt = dt;
 
             return new JsonNetResult(dataModel);
